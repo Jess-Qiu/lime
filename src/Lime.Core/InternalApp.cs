@@ -3,7 +3,7 @@ namespace Lime.Core;
 /// <summary>
 /// Lime 全局配置类
 /// </summary>
-public static class LimeOptions
+public static class InternalApp
 {
     /// <summary>
     /// 应用程序名称，用于日志和 Swagger 文档标题

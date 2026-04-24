@@ -81,7 +81,7 @@ public class LimeExtensionsSwaggerModule : AbpModule
             if (!opt.SwaggerGeneratorOptions.SwaggerDocs.ContainsKey(setting.RemoteServiceName))
                 opt.SwaggerDoc(
                     setting.RemoteServiceName,
-                    new OpenApiInfo { Title = LimeOptions.ApplicationName, Version = "v1" }
+                    new OpenApiInfo { Title = InternalApp.ApplicationName, Version = "v1" }
                 );
     }
 

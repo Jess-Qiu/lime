@@ -66,7 +66,7 @@ public static class SerilogWebApplicationBuilderExtension
             .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
             .Enrich.FromLogContext()
             .Enrich.WithProperty("Environment", environment.EnvironmentName)
-            .Enrich.WithProperty("Application", LimeOptions.ApplicationName)
+            .Enrich.WithProperty("Application", InternalApp.ApplicationName)
             .WriteTo.Async(sink => sink.Console(outputTemplate: options.ConsoleOutputTemplate))
             .WriteTo.Async(sink =>
                 sink.File(
