@@ -3,7 +3,10 @@
     "allow": [
       "Bash(csharpier format:*)",
       "Bash(dotnet build:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git remote:*)"
     ]
   }
 }
