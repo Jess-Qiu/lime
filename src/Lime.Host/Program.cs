@@ -1,8 +1,9 @@
+using Lime.Extensions.Kestrel;
 using Lime.Extensions.Serilog;
 using Lime.Host;
 using Serilog;
 
-var builder = WebApplication.CreateBuilder(args).RegisterSerilogLogger();
+var builder = WebApplication.CreateBuilder(args).RegisterSerilogLogger().ConfigureListeningPorts();
 
 try
 {
