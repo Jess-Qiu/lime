@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Lime.Core;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -13,16 +14,16 @@ using Volo.Abp.Swashbuckle;
 namespace Lime.Extensions.Swagger;
 
 /// <summary>
-/// Lime Swagger 扩展模块，配置 API 文档生成
+///     Lime Swagger 扩展模块，配置 API 文档生成
 /// </summary>
 [DependsOn(typeof(AbpSwashbuckleModule))]
 public class LimeExtensionsSwaggerModule : AbpModule
 {
     /// <summary>
-    /// 配置服务，注册 Swagger 生成器
+    ///     配置服务，注册 Swagger 生成器
     /// </summary>
     /// <param name="context">服务配置上下文</param>
-    public override async Task ConfigureServicesAsync(ServiceConfigurationContext context)
+    public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var mvcOptions = context
             .Services.GetPreConfigureActions<AbpAspNetCoreMvcOptions>()
@@ -38,12 +39,10 @@ public class LimeExtensionsSwaggerModule : AbpModule
             ConfigureApiFilter(opt, settings);
             IncludeXmlComments(opt);
         });
-
-        await base.ConfigureServicesAsync(context);
     }
 
     /// <summary>
-    /// 配置 API 文档过滤器，根据控制器所属模块筛选文档
+    ///     配置 API 文档过滤器，根据控制器所属模块筛选文档
     /// </summary>
     /// <param name="opt">Swagger 生成选项</param>
     /// <param name="settings">约定控制器设置集合</param>
@@ -69,11 +68,11 @@ public class LimeExtensionsSwaggerModule : AbpModule
     }
 
     /// <summary>
-    /// 配置 API 文档分组，为每个模块创建独立的 Swagger 文档
+    ///     配置 API 文档分组，为每个模块创建独立的 Swagger 文档
     /// </summary>
     /// <param name="opt">Swagger 生成选项</param>
     /// <param name="settings">约定控制器设置集合</param>
-    private void ConfigureApiGroups(
+    private static void ConfigureApiGroups(
         SwaggerGenOptions opt,
         IEnumerable<ConventionalControllerSetting> settings
     )
@@ -82,12 +81,12 @@ public class LimeExtensionsSwaggerModule : AbpModule
             if (!opt.SwaggerGeneratorOptions.SwaggerDocs.ContainsKey(setting.RemoteServiceName))
                 opt.SwaggerDoc(
                     setting.RemoteServiceName,
-                    new OpenApiInfo { Title = setting.RemoteServiceName, Version = "v1" }
+                    new OpenApiInfo { Title = LimeOptions.ApplicationName, Version = "v1" }
                 );
     }
 
     /// <summary>
-    /// 包含 XML 注释文档，用于 API 描述信息展示
+    ///     包含 XML 注释文档，用于 API 描述信息展示
     /// </summary>
     /// <param name="opt">Swagger 生成选项</param>
     private void IncludeXmlComments(SwaggerGenOptions opt)
@@ -99,12 +98,10 @@ public class LimeExtensionsSwaggerModule : AbpModule
     }
 
     /// <summary>
-    /// 应用初始化，启用 Swagger UI
+    ///     应用初始化，启用 Swagger UI
     /// </summary>
     /// <param name="context">应用初始化上下文</param>
-    public override async Task OnApplicationInitializationAsync(
-        ApplicationInitializationContext context
-    )
+    public override void OnApplicationInitialization(ApplicationInitializationContext context)
     {
         var app = context.GetApplicationBuilder();
 
@@ -124,8 +121,7 @@ public class LimeExtensionsSwaggerModule : AbpModule
 
             // 如果没有配置任何终结点，使用默认配置
             if (!settings.Any())
-                opt.SwaggerEndpoint("/swagger/v1/swagger.json", "Yi.Framework");
+                opt.SwaggerEndpoint("/swagger/v1/swagger.json", "Lime");
         });
-        await base.OnApplicationInitializationAsync(context);
     }
 }
