@@ -9,6 +9,7 @@
     <!-- 启用中央包管理 -->
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <!-- 生成 XML 文档 -->
+    <PublishDocumentationFiles>true</PublishDocumentationFiles>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!-- 忽略 XML 文档警告 -->
     <NoWarn>$(NoWarn);1591</NoWarn>

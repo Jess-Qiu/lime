@@ -1,13 +1,16 @@
 using Lime.Core;
-using Lime.Extensions.Kestrel;
+using Lime.Extensions.Mvc.Conventions;
 using Lime.Extensions.Serilog;
+using Lime.Extensions.Swagger;
 using Volo.Abp.Modularity;
 
 namespace Lime.Extensions;
 
 /// <summary>
-/// Lime 扩展模块，整合 Serilog 日志和 Kestrel 端口配置
+///     Lime 扩展模块，整合 Serilog 日志和 Kestrel 端口配置
 /// </summary>
 [DependsOn(typeof(LimeCoreModule))]
 [DependsOn(typeof(LimeExtensionsSerilogModule))]
+[DependsOn(typeof(LimeExtensionsSwaggerModule))]
+[DependsOn(typeof(LimeExtensionsMvcModule))]
 public class LimeExtensionsModule : AbpModule { }

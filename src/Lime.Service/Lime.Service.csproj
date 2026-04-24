@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- 属性由 Directory.Build.props 全局管理 -->
 
   <ItemGroup>
