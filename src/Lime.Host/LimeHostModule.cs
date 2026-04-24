@@ -23,6 +23,10 @@ namespace Lime.Host;
 )]
 public class LimeHostModule : AbpModule
 {
+    /// <summary>
+    /// 预配置服务，设置 API 控制器路由
+    /// </summary>
+    /// <param name="context">服务配置上下文</param>
     public override async Task PreConfigureServicesAsync(ServiceConfigurationContext context)
     {
         PreConfigure<AbpAspNetCoreMvcOptions>(options =>
@@ -39,11 +43,19 @@ public class LimeHostModule : AbpModule
         await base.PreConfigureServicesAsync(context);
     }
 
+    /// <summary>
+    /// 配置服务
+    /// </summary>
+    /// <param name="context">服务配置上下文</param>
     public override async Task ConfigureServicesAsync(ServiceConfigurationContext context)
     {
         await base.ConfigureServicesAsync(context);
     }
 
+    /// <summary>
+    /// 应用初始化，配置中间件管道
+    /// </summary>
+    /// <param name="context">应用初始化上下文</param>
     public override async Task OnApplicationInitializationAsync(
         ApplicationInitializationContext context
     )

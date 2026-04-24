@@ -5,8 +5,16 @@ using Serilog.Events;
 
 namespace Lime.Extensions.Serilog;
 
+/// <summary>
+/// Serilog 日志配置扩展类
+/// </summary>
 public static class SerilogWebApplicationBuilderExtension
 {
+    /// <summary>
+    /// 注册 Serilog 日志记录器
+    /// </summary>
+    /// <param name="builder">Web 应用构建器</param>
+    /// <returns>Web 应用构建器</returns>
     public static WebApplicationBuilder RegisterSerilogLogger(this WebApplicationBuilder builder)
     {
         Log.Logger = CreateLogger(builder.Environment);
@@ -16,6 +24,11 @@ public static class SerilogWebApplicationBuilderExtension
         return builder;
     }
 
+    /// <summary>
+    /// 创建 Serilog 日志记录器
+    /// </summary>
+    /// <param name="environment">主机环境信息</param>
+    /// <returns>配置好的日志记录器</returns>
     private static ILogger CreateLogger(IHostEnvironment environment)
     {
         // 根据环境设置最小日志级别
