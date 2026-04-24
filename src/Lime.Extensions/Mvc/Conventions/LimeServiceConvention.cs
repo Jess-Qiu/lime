@@ -3,10 +3,10 @@ using Microsoft.Extensions.Options;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.Conventions;
 
-namespace Lime.Extensions.Mvc.Conventions.Conventions;
+namespace Lime.Extensions.Mvc.Conventions;
 
 /// <summary>
-/// Lime 服务约定，自定义 API 路由模板格式
+///     Lime 服务约定，自定义 API 路由模板格式
 /// </summary>
 public class LimeServiceConvention : AbpServiceConvention
 {
@@ -17,7 +17,7 @@ public class LimeServiceConvention : AbpServiceConvention
         : base(options, conventionalRouteBuilder) { }
 
     /// <summary>
-    /// 配置选择器，为路由模板添加 api 前缀
+    ///     配置选择器，为路由模板添加 api 前缀
     /// </summary>
     /// <param name="rootPath">根路径</param>
     /// <param name="controllerName">控制器名称</param>

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using Volo.Abp.AspNetCore.Mvc.Conventions;
 
-namespace Lime.Extensions.Mvc.Conventions.Conventions;
+namespace Lime.Extensions.Mvc.Conventions;
 
 /// <summary>
 /// Lime 约定路由构建器，自定义 API 路由前缀

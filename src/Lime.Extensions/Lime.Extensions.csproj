@@ -4,4 +4,16 @@
   <ItemGroup>
     <ProjectReference Include="..\Lime.Core\Lime.Core.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Hosting\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Hosting\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Hosting\**" />
+  </ItemGroup>
 </Project>

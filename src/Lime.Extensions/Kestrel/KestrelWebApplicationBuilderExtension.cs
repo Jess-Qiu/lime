@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace Lime.Extensions.Kestrel;
 
@@ -25,10 +26,14 @@ public static class KestrelWebApplicationBuilderExtension
             var kestrelConfig = builder.Configuration.GetSection("Kestrel");
             if (!kestrelConfig.Exists())
             {
-                // 默认配置：监听 5000 端口
+                // 默认配置：监听 HTTP 5000 和 HTTPS 5001 端口
                 builder.WebHost.ConfigureKestrel(options =>
                 {
                     options.ListenAnyIP(5000);
+                    if (builder.Environment.IsDevelopment())
+                    {
+                        options.ListenAnyIP(5001, listenOptions => listenOptions.UseHttps());
+                    }
                 });
             }
             // 如果 appsettings.json 中有 Kestrel 配置，ASP.NET Core 会自动读取
@@ -39,6 +44,10 @@ public static class KestrelWebApplicationBuilderExtension
             builder.WebHost.ConfigureKestrel(options =>
             {
                 options.ListenAnyIP(portNumber);
+                if (builder.Environment.IsDevelopment())
+                {
+                    options.ListenAnyIP(portNumber + 1, listenOptions => listenOptions.UseHttps());
+                }
             });
         }
         // --urls 参数由 ASP.NET Core 自动处理，无需额外配置

@@ -1,5 +1,5 @@
 using Lime.Core;
-using Lime.Extensions.Mvc.Conventions;
+using Lime.Extensions.Mvc;
 using Lime.Extensions.Serilog;
 using Lime.Extensions.Swagger;
 using Volo.Abp.Modularity;
