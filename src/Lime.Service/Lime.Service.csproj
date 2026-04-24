@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- 属性由 Directory.Build.props 全局管理 -->
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lime.Core\Lime.Core.csproj" />
+    <ProjectReference Include="..\Lime.Repository\Lime.Repository.csproj" />
+  </ItemGroup>
+</Project>

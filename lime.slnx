@@ -1,4 +1,13 @@
 <Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Lime.Core/Lime.Core.csproj" />
+    <Project Path="src/Lime.Extensions/Lime.Extensions.csproj" />
+    <Project Path="src/Lime.Host/Lime.Host.csproj" />
+    <Project Path="src/Lime.Middlewares/Lime.Middlewares.csproj" />
+    <Project Path="src/Lime.Repository/Lime.Repository.csproj" />
+    <Project Path="src/Lime.Service/Lime.Service.csproj" />
+    <Project Path="src/Lime.SugarSql/Lime.SugarSql.csproj" />
+  </Folder>
   <Folder Name="/解决方案文件/">
     <File Path=".gitignore" />
     <File Path="CLAUDE.md" />
