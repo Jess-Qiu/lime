@@ -1,3 +1,7 @@
+// <copyright file="Program.cs" company="Lime">
+//     Lime 应用程序入口点
+// </copyright>
+
 using Lime.Extensions.Kestrel;
 using Lime.Extensions.Serilog;
 using Lime.Host;

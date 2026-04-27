@@ -4,7 +4,10 @@ using Lime.Middlewares;
 using Lime.Repository;
 using Lime.Service;
 using Volo.Abp;
+using Volo.Abp.AspNetCore.Auditing;
+using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.Auditing;
 using Volo.Abp.Modularity;
 
 namespace Lime.Host;
@@ -18,7 +21,8 @@ namespace Lime.Host;
     typeof(LimeMiddlewaresModule),
     typeof(LimeRepositoryModule),
     typeof(LimeServiceModule),
-    typeof(AbpAspNetCoreMvcModule)
+    typeof(AbpAspNetCoreMvcModule),
+    typeof(AbpAuditingModule)
 )]
 public class LimeHostModule : AbpModule
 {
@@ -48,7 +52,35 @@ public class LimeHostModule : AbpModule
     /// <param name="context">服务配置上下文</param>
     public override async Task ConfigureServicesAsync(ServiceConfigurationContext context)
     {
+        var services = context.Services;
+        ConfigureAuditing();
+        ConfigureException();
         await base.ConfigureServicesAsync(context);
+    }
+
+    /// <summary>
+    ///     配置异常处理选项
+    /// </summary>
+    private void ConfigureException()
+    {
+        Configure<AbpExceptionHandlingOptions>(options =>
+        {
+            options.SendExceptionsDetailsToClients = true;
+            options.SendStackTraceToClients = false;
+        });
+    }
+
+    /// <summary>
+    ///     配置审计选项
+    /// </summary>
+    private void ConfigureAuditing()
+    {
+        Configure<AbpAuditingOptions>(options => { });
+        Configure<AbpAspNetCoreAuditingUrlOptions>(options =>
+        {
+            options.IncludeSchema = true;
+            options.IncludeHost = true;
+        });
     }
 
     /// <summary>
@@ -63,7 +95,7 @@ public class LimeHostModule : AbpModule
         var env = context.GetEnvironment();
 
         app.UseRouting();
-
+        app.UseUnitOfWork();
         app.UseConfiguredEndpoints();
         await base.OnApplicationInitializationAsync(context);
     }

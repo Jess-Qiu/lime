@@ -2,10 +2,13 @@
   <!-- 属性由 Directory.Build.props 全局管理 -->
 
   <ItemGroup>
+    <PackageReference Include="FreeRedis.AspNetCore" />
+    <PackageReference Include="FreeRedis.DistributedCache" />
     <PackageReference Include="Serilog.AspNetCore" />
     <PackageReference Include="Serilog.Formatting.Compact" />
     <PackageReference Include="Serilog.Sinks.Async" />
     <PackageReference Include="Volo.Abp.Ddd.Application" />
+    <PackageReference Include="Volo.Abp.MultiTenancy" />
     <PackageReference Include="Volo.Abp.Swashbuckle" />
     <PackageReference Include="Volo.Abp.AspNetCore.Mvc" />
     <PackageReference Include="Volo.Abp.AspNetCore.Serilog" />
