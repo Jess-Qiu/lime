@@ -3,6 +3,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Lime.Core\Lime.Core.csproj" />
-    <ProjectReference Include="..\Lime.SugarSql\Lime.SugarSql.csproj" />
   </ItemGroup>
 </Project>

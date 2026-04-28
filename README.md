@@ -27,7 +27,6 @@ src
 ├── Lime.Core           # 核心层：实体、枚举、常量、领域模型、InternalApp 全局配置
 ├── Lime.Extensions     # 扩展层：Serilog 日志、Kestrel 端口、Swagger、MVC 约定路由、缓存
 ├── Lime.Middlewares    # 中间件层：请求管道、异常处理
-├── Lime.SugarSql       # ORM 层：SqlSugar 配置（预留）
 ├── Lime.Repository     # 仓储层：数据访问接口与实现
 ├── Lime.Service        # 服务层：业务逻辑、ApplicationService
 └── Lime.Host           # 主机层：Web API 入口、模块依赖配置

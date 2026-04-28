@@ -6,7 +6,6 @@
     <Project Path="src/Lime.Middlewares/Lime.Middlewares.csproj" />
     <Project Path="src/Lime.Repository/Lime.Repository.csproj" />
     <Project Path="src/Lime.Service/Lime.Service.csproj" />
-    <Project Path="src/Lime.SugarSql/Lime.SugarSql.csproj" />
   </Folder>
   <Folder Name="/解决方案文件/">
     <File Path=".gitignore" />
