@@ -77,6 +77,7 @@ public class TestService : ApplicationService
         return ObjectMapper.Map<TestItemDto, MapItemDto>(dto);
     }
 
+    /// <summary>
     ///     设置 HybridCache 缓存
     /// </summary>
     /// <param name="dto">要缓存的数据</param>
@@ -92,10 +93,9 @@ public class TestService : ApplicationService
     /// <returns>缓存的数据</returns>
     public async Task<TestItemDto> GetHybridCache(string key)
     {
-        return await _hybridCache.GetOrCreateAsync<TestItemDto>(key, cancellationToken =>
-            ValueTask.FromResult(new TestItemDto()
-            {
-                Name = "Hello World!",
-            }));
+        return await _hybridCache.GetOrCreateAsync<TestItemDto>(
+            key,
+            cancellationToken => ValueTask.FromResult(new TestItemDto() { Name = "Hello World!" })
+        );
     }
 }

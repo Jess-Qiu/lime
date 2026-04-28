@@ -18,6 +18,7 @@ Lime Framework 是一个基于 .NET 10 和 Abp vNext 的精简项目模板，旨
 - 自动 Swagger API 文档
 - Redis 分布式缓存支持
 - HybridCache 混合缓存支持
+- Mapster 对象映射支持
 
 ## 项目架构
 
@@ -72,6 +73,20 @@ dotnet run --project src/Lime.Host -- --port 8080
 ### HybridCache
 
 项目默认启用 HybridCache，无需额外配置。HybridCache 提供内存和分布式缓存的双重缓存能力，当 Redis 启用时自动使用分布式缓存作为二级缓存。
+
+### 对象映射 (Mapster)
+
+项目集成了 Mapster 作为对象映射库，通过 ABP 的 `IObjectMapper` 接口使用：
+
+```csharp
+// 在 ApplicationService 中使用
+public MapItemDto MapToDestinationObject(TestItemDto dto)
+{
+    return ObjectMapper.Map<TestItemDto, MapItemDto>(dto);
+}
+```
+
+可在程序集中定义 `IRegister` 接口实现自定义映射配置。
 
 ## 许可
 
