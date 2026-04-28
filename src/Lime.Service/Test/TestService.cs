@@ -1,5 +1,6 @@
 ﻿using Lime.Service.Test.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Hybrid;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Caching;
 
@@ -11,10 +12,12 @@ namespace Lime.Service.Test;
 public class TestService : ApplicationService
 {
     private readonly IDistributedCache<TestItemDto> _distributedCache;
+    private readonly HybridCache _hybridCache;
 
-    public TestService(IDistributedCache<TestItemDto> distributedCache)
+    public TestService(IDistributedCache<TestItemDto> distributedCache, HybridCache hybridCache)
     {
         _distributedCache = distributedCache;
+        _hybridCache = hybridCache;
     }
 
     /// <summary>
@@ -57,11 +60,11 @@ public class TestService : ApplicationService
     /// <summary>
     ///     获取缓存
     /// </summary>
-    /// <param name="dto">包含要查询的键名</param>
+    /// <param name="key">缓存键名</param>
     /// <returns>缓存的数据，如果不存在则返回 null</returns>
-    public async Task<TestItemDto?> GetCache(TestItemDto dto)
+    public async Task<TestItemDto?> GetCache(string key)
     {
-        return await _distributedCache.GetAsync(dto.Name);
+        return await _distributedCache.GetAsync(key);
     }
 
     /// <summary>
@@ -72,5 +75,27 @@ public class TestService : ApplicationService
     public MapItemDto MapToDestinationObject(TestItemDto dto)
     {
         return ObjectMapper.Map<TestItemDto, MapItemDto>(dto);
+    }
+
+    ///     设置 HybridCache 缓存
+    /// </summary>
+    /// <param name="dto">要缓存的数据</param>
+    public async Task SetHybridCache(TestItemDto dto)
+    {
+        await _hybridCache.SetAsync(dto.Name, dto);
+    }
+
+    /// <summary>
+    ///     获取 HybridCache 缓存，不存在时创建默认值
+    /// </summary>
+    /// <param name="key">缓存键名</param>
+    /// <returns>缓存的数据</returns>
+    public async Task<TestItemDto> GetHybridCache(string key)
+    {
+        return await _hybridCache.GetOrCreateAsync<TestItemDto>(key, cancellationToken =>
+            ValueTask.FromResult(new TestItemDto()
+            {
+                Name = "Hello World!",
+            }));
     }
 }

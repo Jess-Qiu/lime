@@ -54,3 +54,5 @@ src
 - **全局属性**：`Directory.Build.props` 配置 TargetFramework、Nullable、ImplicitUsings 等
 - **约定路由**：API 控制器自动注册到 `/api` 路径下，通过 `LimeConventionalRouteBuilder` 自定义
 - **应用入口**：`Program.cs` 使用顶层语句，配置 Serilog → Autofac → Abp 模块 → 运行
+- **Swagger 文档**：运行后访问 `/swagger` 查看 API 文档，标题使用 `InternalApp.ApplicationName`
+- **分布式缓存**：通过 `appsettings.json` 的 `Cache` 节点配置 Redis，`IsEnabled: false` 时禁用

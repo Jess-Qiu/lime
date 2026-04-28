@@ -29,6 +29,9 @@ public class LimeExtensionsCacheModule : AbpModule
             ConfigureRedisCache(context.Services, options);
         }
 
+        // 注册 HybridCache 服务
+        context.Services.AddHybridCache();
+
         await base.ConfigureServicesAsync(context);
     }
 

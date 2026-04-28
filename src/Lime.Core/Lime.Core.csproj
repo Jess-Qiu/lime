@@ -5,6 +5,7 @@
     <PackageReference Include="FreeRedis.AspNetCore" />
     <PackageReference Include="FreeRedis.DistributedCache" />
     <PackageReference Include="Mapster" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" />
     <PackageReference Include="Serilog.AspNetCore" />
     <PackageReference Include="Serilog.Formatting.Compact" />
     <PackageReference Include="Serilog.Sinks.Async" />
