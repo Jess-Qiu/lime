@@ -24,13 +24,23 @@ Lime Framework 是一个基于 .NET 10 和 Abp vNext 的精简项目模板，旨
 
 ```text
 src
-├── Lime.Core           # 核心层：实体、枚举、常量、领域模型、InternalApp 全局配置
-├── Lime.Extensions     # 扩展层：Serilog 日志、Kestrel 端口、Swagger、MVC 约定路由、缓存
+├── Lime.Core           # 核心层：实体基类、仓储接口、枚举、常量、领域模型
+├── Lime.Extensions     # 扩展层：第三方库集成（Serilog、Cache、Mapster、ORM 配置）
 ├── Lime.Middlewares    # 中间件层：请求管道、异常处理
-├── Lime.Repository     # 仓储层：数据访问接口与实现
+├── Lime.Repository     # 仓储层：仓储实现、数据库上下文
 ├── Lime.Service        # 服务层：业务逻辑、ApplicationService
 └── Lime.Host           # 主机层：Web API 入口、模块依赖配置
 ```
+
+### 层级职责
+
+| 层 | 职责 |
+|---|------|
+| **Core** | 实体基类、仓储接口、领域模型，不依赖第三方库 |
+| **Extensions** | 第三方库配置和服务注册（Serilog、Cache、Mapster、ORM） |
+| **Repository** | 仓储接口实现、数据库上下文 |
+| **Service** | 业务逻辑、ApplicationService |
+| **Host** | Web API 入口、模块依赖配置 |
 
 ## 先决条件
 
