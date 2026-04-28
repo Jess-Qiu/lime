@@ -63,4 +63,14 @@ public class TestService : ApplicationService
     {
         return await _distributedCache.GetAsync(dto.Name);
     }
+
+    /// <summary>
+    ///     使用 Mapster 将 TestItemDto 映射为 MapItemDto
+    /// </summary>
+    /// <param name="dto">源数据传输对象</param>
+    /// <returns>映射后的目标对象</returns>
+    public MapItemDto MapToDestinationObject(TestItemDto dto)
+    {
+        return ObjectMapper.Map<TestItemDto, MapItemDto>(dto);
+    }
 }

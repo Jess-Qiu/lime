@@ -1,5 +1,6 @@
 using Lime.Core;
 using Lime.Extensions.Cache;
+using Lime.Extensions.Mapster;
 using Lime.Extensions.Mvc;
 using Lime.Extensions.Serilog;
 using Lime.Extensions.Swagger;
@@ -15,4 +16,5 @@ namespace Lime.Extensions;
 [DependsOn(typeof(LimeExtensionsSwaggerModule))]
 [DependsOn(typeof(LimeExtensionsMvcModule))]
 [DependsOn(typeof(LimeExtensionsCacheModule))]
+[DependsOn(typeof(LimeExtensionsMapsterModule))]
 public class LimeExtensionsModule : AbpModule { }
