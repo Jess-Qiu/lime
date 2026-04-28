@@ -9,7 +9,10 @@
       "Bash(git remote:*)",
       "Bash(dotnet new:*)",
       "Bash(dotnet sln:*)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(git:*)",
+      "Skill(update-config)",
+      "Bash(where gh:*)"
     ]
   }
 }
