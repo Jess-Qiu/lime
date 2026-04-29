@@ -1,11 +1,12 @@
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using Lime.Core;
+using Lime.Core.Json;
 using Lime.Extensions;
 using Lime.Middlewares;
 using Lime.Repository;
 using Lime.Service;
-using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Auditing;
 using Volo.Abp.AspNetCore.ExceptionHandling;
@@ -60,6 +61,7 @@ public class LimeHostModule : AbpModule
         var configuration = services.GetConfiguration();
         var env = services.GetHostingEnvironment();
         ConfigureCors(services, configuration, env);
+        ConfigureJson();
         ConfigureDistributedCache();
         ConfigureAuditing();
         ConfigureException();
@@ -68,12 +70,25 @@ public class LimeHostModule : AbpModule
     }
 
     /// <summary>
+    ///     配置 JSON 序列化选项
+    /// </summary>
+    private void ConfigureJson()
+    {
+        Configure<JsonOptions>(options =>
+        {
+            options.JsonSerializerOptions.TypeInfoResolver = new DefaultJsonTypeInfoResolver();
+            options.JsonSerializerOptions.Converters.Add(new DatetimeJsonConverter());
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        });
+    }
+
+    /// <summary>
     ///     配置 CORS 跨域选项
     /// </summary>
     /// <param name="services">服务集合</param>
     /// <param name="configuration">配置</param>
     /// <param name="env">主机环境</param>
-    private static void ConfigureCors(
+    private void ConfigureCors(
         IServiceCollection services,
         IConfiguration configuration,
         IHostEnvironment env
