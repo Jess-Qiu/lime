@@ -3,6 +3,7 @@ using Lime.Extensions;
 using Lime.Middlewares;
 using Lime.Repository;
 using Lime.Service;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Auditing;
 using Volo.Abp.AspNetCore.ExceptionHandling;
@@ -54,10 +55,30 @@ public class LimeHostModule : AbpModule
     public override async Task ConfigureServicesAsync(ServiceConfigurationContext context)
     {
         var services = context.Services;
+        ConfigureCors(services);
         ConfigureDistributedCache();
         ConfigureAuditing();
         ConfigureException();
+
         await base.ConfigureServicesAsync(context);
+    }
+
+    /// <summary>
+    ///     配置 CORS 跨域选项
+    /// </summary>
+    /// <param name="services">服务集合</param>
+    private static void ConfigureCors(IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy(
+                "LimeDefault",
+                builder =>
+                {
+                    builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                }
+            );
+        });
     }
 
     /// <summary>
@@ -111,6 +132,7 @@ public class LimeHostModule : AbpModule
         var env = context.GetEnvironment();
 
         app.UseRouting();
+        app.UseCors("LimeDefault");
         app.UseUnitOfWork();
         app.UseConfiguredEndpoints();
         await base.OnApplicationInitializationAsync(context);
