@@ -4,6 +4,7 @@ using Lime.Middlewares;
 using Lime.Repository;
 using Lime.Service;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Auditing;
@@ -56,8 +57,9 @@ public class LimeHostModule : AbpModule
     public override async Task ConfigureServicesAsync(ServiceConfigurationContext context)
     {
         var services = context.Services;
+        var configuration = services.GetConfiguration();
         var env = services.GetHostingEnvironment();
-        ConfigureCors(services, env);
+        ConfigureCors(services, configuration, env);
         ConfigureDistributedCache();
         ConfigureAuditing();
         ConfigureException();
@@ -69,31 +71,37 @@ public class LimeHostModule : AbpModule
     ///     配置 CORS 跨域选项
     /// </summary>
     /// <param name="services">服务集合</param>
+    /// <param name="configuration">配置</param>
     /// <param name="env">主机环境</param>
-    private static void ConfigureCors(IServiceCollection services, IHostEnvironment env)
+    private static void ConfigureCors(
+        IServiceCollection services,
+        IConfiguration configuration,
+        IHostEnvironment env
+    )
     {
         services.AddCors(options =>
         {
-            options.AddPolicy(
-                "LimeDefault",
-                builder =>
+            options.AddDefaultPolicy(builder =>
+            {
+                if (env.IsDevelopment())
                 {
-                    if (env.IsDevelopment())
-                    {
-                        // 开发环境：允许任意来源、方法和头部
-                        builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-                    }
-                    else
-                    {
-                        // 生产环境：需要配置具体的允许来源
-                        builder
-                            .AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .SetIsOriginAllowed(_ => true)
-                            .AllowCredentials();
-                    }
+                    // 开发环境：允许任意来源、方法和头部
+                    builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
                 }
-            );
+                else
+                {
+                    // 生产环境：从配置读取允许的来源
+                    var allowedOrigins =
+                        configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+                        ?? Array.Empty<string>();
+
+                    builder
+                        .WithOrigins(allowedOrigins)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                }
+            });
         });
     }
 
@@ -148,7 +156,7 @@ public class LimeHostModule : AbpModule
         var env = context.GetEnvironment();
 
         app.UseRouting();
-        app.UseCors("LimeDefault");
+        app.UseCors();
         app.UseUnitOfWork();
         app.UseConfiguredEndpoints();
         await base.OnApplicationInitializationAsync(context);
