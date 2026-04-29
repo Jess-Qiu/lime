@@ -8,6 +8,7 @@ using Volo.Abp.AspNetCore.Auditing;
 using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Auditing;
+using Volo.Abp.Caching;
 using Volo.Abp.Modularity;
 
 namespace Lime.Host;
@@ -53,9 +54,24 @@ public class LimeHostModule : AbpModule
     public override async Task ConfigureServicesAsync(ServiceConfigurationContext context)
     {
         var services = context.Services;
+        ConfigureDistributedCache();
         ConfigureAuditing();
         ConfigureException();
         await base.ConfigureServicesAsync(context);
+    }
+
+    /// <summary>
+    ///     配置分布式缓存选项
+    /// </summary>
+    private void ConfigureDistributedCache()
+    {
+        Configure<AbpDistributedCacheOptions>(cacheOptions =>
+        {
+            // 设置缓存不过期，默认滑动 20 分钟
+            cacheOptions.GlobalCacheEntryOptions.SlidingExpiration = null;
+            // 缓存 key 前缀
+            cacheOptions.KeyPrefix = "Lime_";
+        });
     }
 
     /// <summary>
