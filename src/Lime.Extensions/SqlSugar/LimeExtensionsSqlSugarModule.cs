@@ -40,7 +40,7 @@ public class LimeExtensionsSqlSugarModule : AbpModule
         });
     }
 
-    private void ConfigureDbOptions(LimeSqlSugarOptions? dbConnOptions)
+    private void ConfigureDbOptions(LimeDbConnOptions? dbConnOptions)
     {
         Configure<AbpDbConnectionOptions>(options =>
         {
@@ -80,9 +80,9 @@ public class LimeExtensionsSqlSugarModule : AbpModule
         });
     }
 
-    private static LimeSqlSugarOptions? GetSqlSugarOptions(IConfiguration configuration)
+    private static LimeDbConnOptions? GetSqlSugarOptions(IConfiguration configuration)
     {
         var section = configuration.GetSection(ConfigurationSection);
-        return section.Exists() ? section.Get<LimeSqlSugarOptions>() : null;
+        return section.Exists() ? section.Get<LimeDbConnOptions>() : null;
     }
 }

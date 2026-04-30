@@ -14,6 +14,7 @@ using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Auditing;
 using Volo.Abp.Caching;
 using Volo.Abp.Modularity;
+using Volo.Abp.MultiTenancy;
 
 namespace Lime.Host;
 
@@ -60,13 +61,23 @@ public class LimeHostModule : AbpModule
         var services = context.Services;
         var configuration = services.GetConfiguration();
         var env = services.GetHostingEnvironment();
+
         ConfigureCors(services, configuration, env);
         ConfigureJson();
         ConfigureDistributedCache();
         ConfigureAuditing();
         ConfigureException();
+        ConfigureMultiTenancy();
 
         await base.ConfigureServicesAsync(context);
+    }
+
+    private void ConfigureMultiTenancy()
+    {
+        Configure<AbpMultiTenancyOptions>(options =>
+        {
+            options.IsEnabled = true;
+        });
     }
 
     /// <summary>

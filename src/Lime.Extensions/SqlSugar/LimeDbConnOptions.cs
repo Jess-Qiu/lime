@@ -1,9 +1,11 @@
+using SqlSugar;
+
 namespace Lime.Extensions.SqlSugar;
 
 /// <summary>
 ///     Lime SqlSugar 配置选项
 /// </summary>
-public class LimeSqlSugarOptions
+public class LimeDbConnOptions
 {
     /// <summary>
     ///     数据库类型，默认 MySQL
@@ -29,7 +31,7 @@ public class LimeSqlSugarOptions
     /// <summary>
     ///     解析数据库类型
     /// </summary>
-    public global::SqlSugar.DbType ParsedDbType =>
+    public DbType ParsedDbType =>
         DbType?.ToLower() switch
         {
             "mysql" => global::SqlSugar.DbType.MySql,
