@@ -13,12 +13,12 @@
     <PackageVersion Include="Serilog.Formatting.Compact" Version="3.0.0" />
     <PackageVersion Include="Serilog.Sinks.Async" Version="2.1.0" />
     <PackageVersion Include="SqlSugarCore" Version="5.1.4.214" />
+    <PackageVersion Include="Volo.Abp.AspNetCore.MultiTenancy" Version="10.3.0" />
     <PackageVersion Include="Volo.Abp.AspNetCore.Mvc" Version="10.3.0" />
     <PackageVersion Include="Volo.Abp.AspNetCore.Serilog" Version="10.3.0" />
     <PackageVersion Include="Volo.Abp.Auditing" Version="10.3.0" />
     <PackageVersion Include="Volo.Abp.Autofac" Version="10.3.0" />
     <PackageVersion Include="Volo.Abp.Ddd.Application" Version="10.3.0" />
-    <PackageVersion Include="Volo.Abp.MultiTenancy" Version="10.3.0" />
     <PackageVersion Include="Volo.Abp.Swashbuckle" Version="10.3.0" />
   </ItemGroup>
 </Project>

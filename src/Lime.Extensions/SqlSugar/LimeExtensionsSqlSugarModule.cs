@@ -18,26 +18,14 @@ public class LimeExtensionsSqlSugarModule : AbpModule
         var services = context.Services;
         var configuration = GetSqlSugarOptions(services.GetConfiguration());
 
+        if (configuration == null)
+            return;
+
         ConfigureDbOptions(configuration);
-        ConfigureGuidGenerator(configuration.ParsedDbType);
+        ConfigureDefaultTenant(configuration);
+        ConfigureGuidGenerator(configuration!.ParsedDbType);
 
         await base.ConfigureServicesAsync(context);
-    }
-
-    private void ConfigureGuidGenerator(DbType parseDbType)
-    {
-        var guidType = parseDbType switch
-        {
-            DbType.MySql or DbType.PostgreSQL => SequentialGuidType.SequentialAsString,
-            DbType.SqlServer => SequentialGuidType.SequentialAtEnd,
-            DbType.Oracle => SequentialGuidType.SequentialAsBinary,
-            _ => SequentialGuidType.SequentialAtEnd,
-        };
-
-        Configure<AbpSequentialGuidGeneratorOptions>(options =>
-        {
-            options.DefaultSequentialGuidType = guidType;
-        });
     }
 
     private void ConfigureDbOptions(LimeDbConnOptions? dbConnOptions)
@@ -46,7 +34,10 @@ public class LimeExtensionsSqlSugarModule : AbpModule
         {
             options.ConnectionStrings.Default = dbConnOptions!.ConnectionString;
         });
+    }
 
+    private void ConfigureDefaultTenant(LimeDbConnOptions? dbConnOptions)
+    {
         Configure<AbpDefaultTenantStoreOptions>(options =>
         {
             var tenants = options.Tenants.ToList();
@@ -77,6 +68,22 @@ public class LimeExtensionsSqlSugarModule : AbpModule
             );
 
             options.Tenants = tenants.ToArray();
+        });
+    }
+
+    private void ConfigureGuidGenerator(DbType parseDbType)
+    {
+        var guidType = parseDbType switch
+        {
+            DbType.MySql or DbType.PostgreSQL => SequentialGuidType.SequentialAsString,
+            DbType.SqlServer => SequentialGuidType.SequentialAtEnd,
+            DbType.Oracle => SequentialGuidType.SequentialAsBinary,
+            _ => SequentialGuidType.SequentialAtEnd,
+        };
+
+        Configure<AbpSequentialGuidGeneratorOptions>(options =>
+        {
+            options.DefaultSequentialGuidType = guidType;
         });
     }
 

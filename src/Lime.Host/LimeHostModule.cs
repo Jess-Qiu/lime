@@ -183,6 +183,7 @@ public class LimeHostModule : AbpModule
 
         app.UseRouting();
         app.UseCors();
+        app.UseMultiTenancy();
         app.UseUnitOfWork();
         app.UseConfiguredEndpoints();
         await base.OnApplicationInitializationAsync(context);

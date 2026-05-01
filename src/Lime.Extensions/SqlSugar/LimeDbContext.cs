@@ -9,9 +9,9 @@ using Volo.Abp.MultiTenancy;
 
 namespace Lime.Extensions.SqlSugar;
 
-public abstract class LimeSqlSugarContext : ISqlSugarDbContext
+public abstract class LimeDbContext : ISqlSugarDbContext
 {
-    protected LimeSqlSugarContext(AbpLazyServiceProvider lazyServiceProvider)
+    protected LimeDbContext(AbpLazyServiceProvider lazyServiceProvider)
     {
         LoggerFactory = lazyServiceProvider.LazyGetRequiredService<ILoggerFactory>();
         CurrentTenantService = lazyServiceProvider.LazyGetRequiredService<ICurrentTenant>();
